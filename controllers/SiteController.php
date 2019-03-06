@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -63,6 +64,18 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+    public function actionAutocomplete()
+    {
+
+        $data = User::find()->select(['name as value', 'name as label', 'id as id'])
+            ->asArray()
+            ->all();
+        $model = User::find()->all();
+
+        return $this->render('autocomplete', compact('data', 'model'));
+    }
+
 
     /**
      * Login action.
